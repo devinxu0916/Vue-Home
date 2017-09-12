@@ -96,6 +96,7 @@
         this.editorText = marked(this.editorText)
         // 发布上传
         axios.post('https://www.vue-js.com/api/v1/topics', {
+          accesstoken: this.accessToken,
           title: this.editorTitle,
           tab: this.tab,
           content: this.editorText
@@ -105,9 +106,13 @@
           if (this.chip) clearTimeout(this.chip)
           this.chip = setTimeout(() => {
             this.publish_chip = false
+            this.$router.push({
+              path: '/'
+            })
           }, 2000)
         }).catch(() => {
           this.publish_chip = true
+          this.tipMsg = '发布失败'
           /* this.tipMsg = '发布失败'
           if (this.chip) clearTimeout(this.chip)
           this.chip = setTimeout(() => {

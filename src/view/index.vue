@@ -35,7 +35,7 @@
     height: 100vh;
     .tabs {
       flex: 1;
-      margin: 8rem 0 0 0;
+      margin: 8rem 0 4rem 0;
     }
   }
 </style>

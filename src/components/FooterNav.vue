@@ -60,7 +60,6 @@
     left: 0;
     right: 0;
   }
-
   .bottomNav .mu-bottom-nav-shift-wrapper {
     display: flex;
     justify-content: space-around;

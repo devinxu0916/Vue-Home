@@ -5,6 +5,7 @@ import content from '../view/content.vue'
 import login from '../view/login.vue'
 import my from '../view/my.vue'
 import publish from '../view/publish.vue'
+import message from '../view/message.vue'
 
 Vue.use(Router)
 
@@ -35,6 +36,11 @@ export default new Router({
       path: '/publish',
       name: 'publish',
       component: publish
+    },
+    {
+      path: '/message',
+      name: 'message',
+      component: message
     }
   ]
 })
