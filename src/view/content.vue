@@ -71,11 +71,11 @@
       </ul>
       <!--评论-->
       <div id="comments-input">
-        <mu-text-field v-model="commentText" hintText="这里输入评论内容" multiLine :rows="3" :rowsMax="6" /><br/>
+        <mu-text-field v-model="commentText" :errorText="commentError" hintText="这里输入评论内容" multiLine :rows="3" :rowsMax="6" /><br/>
         <mu-raised-button @click="commentOn" label="评论" class="demo-raised-button" primary/>
       </div>
       <!--操作反馈-->
-      <mu-toast v-if="!accessToken" message="点赞评论及收藏文章请先登录" />
+      <router-link v-if="!accessToken" to="/login" tag="p" class="goLogin">点赞评论及收藏文章请先登录</router-link>
       <mu-toast v-if="commentSuccess" message="评论成功！！" @close="commentReplyOf(index)" />
       <mu-toast v-if="commentFalse" message="您已取消评论！！" @close="commentReplyOf(index)" />
     </div>
@@ -99,7 +99,8 @@
         commentText: '',
         commentReplyText: '',
         commentSuccess: false,
-        commentFalse: false
+        commentFalse: false,
+        commentError: ''
       }
     },
     created () {
@@ -221,28 +222,32 @@
       },
       // 添加评论
       commentOn () {
-        let id = this.$route.query.id
-        axios.post('https://www.vue-js.com/api/v1/topic/' + id + '/replies', {
-          accesstoken: this.accessToken,
-          content: this.commentText
-        }).then((res) => {
-          this.commentSuccess = true
-          if (this.toastTimer) clearTimeout(this.toastTimer)
-          this.toastTimer = setTimeout(() => {
-            this.commentSuccess = false
-          }, 2000)
-          // 重新加载数据 刷新页面
-          this.getData()
-          // 清空输入
-          this.commentText = ''
-        }).catch((err) => {
-          this.commentFalse = true
-          if (this.toastTimer) clearTimeout(this.toastTimer)
-          this.toastTimer = setTimeout(() => {
-            this.commentSuccess = false
-          }, 2000)
-          console.log(err)
-        })
+        if (!this.commentText) {
+          this.commentError = '评论不能为空'
+        } else {
+          let id = this.$route.query.id
+          axios.post('https://www.vue-js.com/api/v1/topic/' + id + '/replies', {
+            accesstoken: this.accessToken,
+            content: this.commentText
+          }).then((res) => {
+            this.commentSuccess = true
+            if (this.toastTimer) clearTimeout(this.toastTimer)
+            this.toastTimer = setTimeout(() => {
+              this.commentSuccess = false
+            }, 2000)
+            // 重新加载数据 刷新页面
+            this.getData()
+            // 清空输入
+            this.commentText = ''
+          }).catch((err) => {
+            this.commentFalse = true
+            if (this.toastTimer) clearTimeout(this.toastTimer)
+            this.toastTimer = setTimeout(() => {
+              this.commentSuccess = false
+            }, 2000)
+            console.log(err)
+          })
+        }
       }
     }
   }
@@ -357,6 +362,18 @@
         float: right;
         margin-right: 0.5rem;
       }
+    }
+    .goLogin{
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      background: rgba(0,0,0,.8);
+      padding: 0.8rem 0;
+      border-radius: 20px;
+      color: #fff;
+      margin-bottom: 0;
     }
     #comments-input {
       text-align: center;
