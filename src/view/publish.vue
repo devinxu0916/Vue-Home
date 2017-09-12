@@ -52,8 +52,8 @@
         tab: 'ask',
         editorTitle: '',
         editorText: '',
-        tipMsg: '',
-        publish_chip: false
+        publish_chip: false,
+        tipMsg: ''
       }
     },
     created () {
