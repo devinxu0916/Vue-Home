@@ -79,7 +79,7 @@
           alert('获取数据失败')
         })
       },
-      // 根据用户登录名获取用户信息\
+      // 根据用户登录名获取用户信息
       getUserData () {
         let userName = this.user.loginname
         axios.get('https://www.vue-js.com/api/v1/user/' + userName).then((res) => {
