@@ -39,4 +39,4 @@
 > 启动服务  
 > npm run dev  
 > 运行  
-> localhost:8090/vuecommunitytest  
+> localhost:8080/  
